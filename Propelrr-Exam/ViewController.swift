@@ -14,11 +14,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var mobileNumber: UITextField!
     @IBOutlet weak var emailAd: UITextField!
     @IBOutlet weak var birthDate: UIDatePicker!
-    
-
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         firstName.delegate = self
         middleInitial.delegate = self
         lastName.delegate = self
@@ -28,20 +26,28 @@ class ViewController: UIViewController, UITextFieldDelegate {
     
     //Keyboard Setup:
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        firstName.endEditing(true)
-//        middleInitial.endEditing(true)
         textField.resignFirstResponder()
-        print("Returned")
+        
+        switch textField {
+        case firstName:
+            firstNameFieldEnded()
+        case middleInitial:
+            middleInitialFieldEnded()
+        case lastName:
+            lastNameFieldEnded()
+        case mobileNumber:
+            mobileNumFieldEnded()
+        case emailAd:
+            emailFieldEnded()
+        default:
+            print("Unknown Field")
+        }
         return true
     }
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        print("Ended Succsessfully")
-    }
-    
-    
 
-    @IBAction func submitButton(_ sender: Any) {
-        //First Name:
+    
+    //FIRST NAME:
+    func firstNameFieldEnded(){
         if firstName.text != "" {
             if allowedCharacters(inputStringParam: firstName.text!) {
                 firstName.textColor = UIColor.black
@@ -54,8 +60,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             errorAlert(messageParam: "First name must not be empty")
             return
         }
-        
-        //Middle Initial
+    }
+    
+    //MIDDLE INITIAL:
+    func middleInitialFieldEnded(){
         let middInitLength:Int = (middleInitial.text! as NSString).length
         if middInitLength <= 3 && middInitLength != 0{
             middleInitial.textColor = UIColor.black
@@ -67,8 +75,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
             errorAlert(messageParam: "Middle name must not be empty")
             return
         }
-        
-        //Last Name
+    }
+    
+    //LASTNAME:
+    func lastNameFieldEnded(){
         if lastName.text != "" {
             if allowedCharacters(inputStringParam: lastName.text!){
                 print(capitalizeFirstLetterOfEachWord(in: lastName.text!))
@@ -77,9 +87,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
             errorAlert(messageParam: "Text must not be empty or cannot contain special characters except comma and periods")
             return
         }
-        
-        //Mobile number
-        //  Keyboard was fixed to integers only in mobile
+    }
+    //MOBILE NUMBER:
+    func mobileNumFieldEnded(){
         if mobileNumber.text != "" {
             if mobileNumber.text!.count == 11 && mobileNumber.text!.hasPrefix("09") {
                 //Success
@@ -90,8 +100,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
         }  else{
             errorAlert(messageParam: "Cellphone number must not be empty")
         }
-        
-        //Email
+    }
+    //EMAIL:
+    func emailFieldEnded(){
         if emailAd.text != "" {
             if checkEmailFormat(emailParam: emailAd.text!) {
                 print(emailAd.text)
@@ -102,15 +113,17 @@ class ViewController: UIViewController, UITextFieldDelegate {
         } else {
             errorAlert(messageParam: "Email must not be empty")
         }
-        
-        
+    }
+    
+
+    //If button is existing:
+    @IBAction func submitButton(_ sender: Any) {
         //Birth Day
         print(birthDate.date)
-    
     }
     
     
-    //MARK: - Functions:
+    //MARK: - Misc Functions:
     
     //Capitalize all first names:
     func capitalizeFirstLetterOfEachWord(in string: String) -> String {
