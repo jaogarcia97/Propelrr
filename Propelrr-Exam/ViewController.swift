@@ -13,8 +13,9 @@ class ViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var lastName: UITextField!
     @IBOutlet weak var mobileNumber: UITextField!
     @IBOutlet weak var emailAd: UITextField!
+    @IBOutlet weak var ageResult: UILabel!
     @IBOutlet weak var birthDate: UIDatePicker!
-        
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         firstName.delegate = self
@@ -24,7 +25,16 @@ class ViewController: UIViewController, UITextFieldDelegate {
         emailAd.delegate = self
     }
     
-    //Keyboard Setup:
+    @IBAction func datePickerChanged(_ sender: Any) {
+        birthDate.maximumDate = Date()
+        let calendar = Calendar.current
+        let ageComponents = calendar.dateComponents([.year], from: birthDate.date, to: Date())
+        let age = ageComponents.year!
+        print(age)
+        ageResult.text = String(age)
+    }
+    
+    //MARK:- TextField Functions
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         
@@ -81,10 +91,14 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func lastNameFieldEnded(){
         if lastName.text != "" {
             if allowedCharacters(inputStringParam: lastName.text!){
+                lastName.textColor = UIColor.black
                 print(capitalizeFirstLetterOfEachWord(in: lastName.text!))
+            }else{
+                lastName.textColor = UIColor.red
+                errorAlert(messageParam: "Text must contain special characters except comma and periods")
             }
         } else{
-            errorAlert(messageParam: "Text must not be empty or cannot contain special characters except comma and periods")
+            errorAlert(messageParam: "Text must not be empty")
             return
         }
     }
@@ -93,8 +107,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         if mobileNumber.text != "" {
             if mobileNumber.text!.count == 11 && mobileNumber.text!.hasPrefix("09") {
                 //Success
+                mobileNumber.textColor = UIColor.black
                 print(mobileNumber.text!)
             }else {
+                mobileNumber.textColor = UIColor.red
                 errorAlert(messageParam: "Must have 11 characters and must start with 09")
             }
         }  else{
@@ -105,8 +121,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
     func emailFieldEnded(){
         if emailAd.text != "" {
             if checkEmailFormat(emailParam: emailAd.text!) {
-                print(emailAd.text)
+                emailAd.textColor = UIColor.black
+                print(emailAd.text!)
             } else {
+                emailAd.textColor = UIColor.red
                 errorAlert(messageParam: "Incorrect email format")
             }
     
@@ -116,13 +134,6 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
 
-    //If button is existing:
-    @IBAction func submitButton(_ sender: Any) {
-        //Birth Day
-        print(birthDate.date)
-    }
-    
-    
     //MARK: - Misc Functions:
     
     //Capitalize all first names:
@@ -173,6 +184,19 @@ class ViewController: UIViewController, UITextFieldDelegate {
     }
     
 }
+
+//MARK: UIDatePickerExtension
+//Available only on iOS 14  and above
+extension UIDatePicker {
+    func setOnDateChangeListener(onDateChanged: @escaping () -> Void){
+        self.addAction(UIAction{ action in
+            onDateChanged()
+        }, for: .valueChanged)
+    }
+
+}
+
+
 
 
     
