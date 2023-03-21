@@ -59,6 +59,13 @@
                                     <action selector="datePickerChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="xrZ-cr-4l2"/>
                                 </connections>
                             </datePicker>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="s9E-nv-2Hh">
+                                <rect key="frame" x="143.5" y="677.5" width="127" height="32"/>
+                                <segments>
+                                    <segment title="Male"/>
+                                    <segment title="Female"/>
+                                </segments>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -82,6 +89,8 @@
                             <constraint firstItem="Wpo-C2-KS5" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="iVA-p0-nZP"/>
                             <constraint firstItem="l8s-wL-0zF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="nsS-NQ-2Hu"/>
                             <constraint firstItem="qdP-eO-xb1" firstAttribute="top" secondItem="vPh-fb-BCt" secondAttribute="bottom" constant="15" id="pfg-RX-sNp"/>
+                            <constraint firstItem="s9E-nv-2Hh" firstAttribute="top" secondItem="Wpo-C2-KS5" secondAttribute="bottom" constant="50" id="q72-Hc-rBi"/>
+                            <constraint firstItem="s9E-nv-2Hh" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="tTf-Rl-jYq"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="D0y-sn-5O4" secondAttribute="trailing" constant="40" id="tbd-ty-DIw"/>
                             <constraint firstItem="9VI-JJ-VGT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="vhN-ci-1wk"/>
                             <constraint firstItem="Wpo-C2-KS5" firstAttribute="top" secondItem="l8s-wL-0zF" secondAttribute="bottom" constant="15" id="waG-P8-0iz"/>
